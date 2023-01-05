@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="col-lg-8 mt-5 mt-lg-0">
-                    <form class="php-email-form">
+                    <form id="frm1" class="php-email-form">
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required />
@@ -88,7 +88,11 @@
                             <button type="submit">Send Message</button>
                         </div>
                     </form>
-                    <script>
+                    <div class="results">
+                        <h2>Form Data</h2>
+                        <pre></pre>
+                    </div>
+                    <!--  <script>
                         const formEl = document.querySelector('.php-email-form');
                         formEl.addEventListener('submit', event => {
                             event.preventDefault();
@@ -96,7 +100,28 @@
                             const data = Object.fromEntries(formData);
                             console.log(data);
                         })
+                    </script>-->
+                    <script>
+                        function handleFormSubmit(event) {
+                            event.preventDefault();
+
+                            const data = new FormData(event.target);
+
+
+                            const formJSON = Object.fromEntries(data.entries());
+
+                            // for multi-selects, we need special handling
+
+                            const results = document.querySelector('.results pre');
+                            results.innerText = JSON.stringify(formJSON, null, 2);
+                        }
+
+                        const form = document.querySelector('.php-email-form');
+                        form.addEventListener('submit', handleFormSubmit);
                     </script>
+
+
+
                 </div>
             </div>
         </div>
@@ -144,6 +169,7 @@
     <script src="assets/vendor/typed.js/typed.min.js"></script>
     <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+   
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
